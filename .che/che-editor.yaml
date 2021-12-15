@@ -20,14 +20,14 @@ components:
         - name: HOSTED_PLUGIN_PORT
           value: '3130'
         - name: THEIA_HOST
-          value: 0.0.0.0
+          value: 127.0.0.1
       volumeMounts:
         - name: plugins
           path: /plugins
         - name: theia-local
           path: /home/theia/.theia
       mountSources: true
-      memoryLimit: 2048M
+      memoryLimit: 512M
       cpuLimit: 1500m
       cpuRequest: 100m
       endpoints:
@@ -115,7 +115,9 @@ components:
       command:
         - /go/bin/che-machine-exec
         - '--url'
-        - '0.0.0.0:3333'
+        - '127.0.0.1:3333'
+        - '--idle-timeout'
+        - 15m
       memoryLimit: 128Mi
       memoryRequest: 32Mi
       cpuLimit: 500m
@@ -132,6 +134,8 @@ components:
         - name: REMOTE_ENDPOINT_VOLUME_NAME
           value: remote-endpoint
       volumeMounts:
+        - name: plugins
+          path: /plugins
         - name: remote-endpoint
           path: /remote-endpoint
       memoryLimit: 128Mi
